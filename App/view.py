@@ -87,8 +87,28 @@ def printBestBooks(books):
 
 
 def printSortResults(sort_books, sample=3):
-    # TODO completar funcion para imprimir resultados sort lab 4
-    pass
+    size = lt.size(sort_books)
+    if size <= sample*2:
+        print("Los", size, "libros ordenados son:")
+        for book in lt.iterator(sort_books):
+            print('Titulo: ' + book['title'] + ' ISBN: ' +
+                book['isbn'] + ' Rating: ' + book['average_rating'])
+    else:
+        print("Los", sample, "primeros libros ordenados son:")
+        i = 1
+        while i <= sample:
+            book = lt.getElement(sort_books, i)
+            print('Titulo: ' + book['title'] + ' ISBN: ' +
+                book['isbn'] + ' Rating: ' + book['average_rating'])
+            i += 1
+    print("Los", sample, "últimos libros ordenados son:")
+    i = size - sample + 1
+    while i <= size:
+        book = lt.getElement(sort_books, i)
+        print('Titulo: ' + book['title'] + ' ISBN: ' +
+        book['isbn'] + ' Rating: ' + book['average_rating'])
+        i += 1
+
 
 
 # Se crea el controlador asociado a la vista
@@ -133,9 +153,11 @@ if __name__ == "__main__":
             # TODO completar modificaciones para el laboratorio 4
             size = input("Indique tamaño de la muestra: ")
             result = controller.sortBooks(control, int(size))
-            result = f"{result:.3f}"
+            tiempo = f"{result[0]:.3f}"
+            ord_list = result[1]
             print("Para", size, "elementos, delta tiempo:",
-                  str(result), "[ms]\n")
+                  str(tiempo), "[ms]\n")
+            printSortResults(ord_list)
 
         elif int(inputs[0]) == 0:
             working = False
